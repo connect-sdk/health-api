@@ -17,8 +17,6 @@ github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDk
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
 github.com/connect-sdk/interceptor v0.0.0-20230926085236-e8e362a3049e h1:srkaa7bXZXGP5wtwWVscH1/NTkGCKpQcBvutvs0bI70=
 github.com/connect-sdk/interceptor v0.0.0-20230926085236-e8e362a3049e/go.mod h1:eKf35Nj7TruuoxWZ9EKNuju81TSGZ++Nj8DhzhctriE=
-github.com/connect-sdk/middleware v0.0.0-20230926085620-6d6728a96687 h1:olm9siCzqLet5ngo39YJeoJp6V0bQwzeK1A/UMxQCKE=
-github.com/connect-sdk/middleware v0.0.0-20230926085620-6d6728a96687/go.mod h1:2Cu1Iu0acEd46dIfS2hSzpKogPa8Y2lXfHluel/gXxg=
 github.com/connect-sdk/middleware v0.0.0-20230926095257-b1bdb8639191 h1:1F9MfBrb4WfhwLt4sZWs2m4KcUVtPPx0ztKo2Xkgfow=
 github.com/connect-sdk/middleware v0.0.0-20230926095257-b1bdb8639191/go.mod h1:2Cu1Iu0acEd46dIfS2hSzpKogPa8Y2lXfHluel/gXxg=
 github.com/connect-sdk/telemetry v0.0.0-20230926085043-fa543583ed94 h1:RqpyQ32RrZS6WWHwvT6L8pttmzOa6TEhwKckqgonW/g=
@@ -164,8 +162,8 @@ golang.org/x/tools v0.0.0-20191119224855-298f0cb1881e/go.mod h1:b+2E5dAYhXwXZwtn
 golang.org/x/tools v0.1.12/go.mod h1:hNGJHUnrk76NpqgfD5Aqm5Crs+Hm0VOH/i9J2+nxYbc=
 golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
-google.golang.org/api v0.143.0 h1:o8cekTkqhywkbZT6p1UHJPZ9+9uuCAJs/KYomxZB8fA=
-google.golang.org/api v0.143.0/go.mod h1:FoX9DO9hT7DLNn97OuoZAGSDuNAXdJRuGK98rSUgurk=
+google.golang.org/api v0.145.0 h1:kBjvf1A3/m30kUvnUX9jZJxTu3lJrpGFt5V/1YZrjwg=
+google.golang.org/api v0.145.0/go.mod h1:OARJqIfoYjXJj4C1AiBSXYZt03qsoz8FQYU6fBEfrHM=
 google.golang.org/appengine v1.1.0/go.mod h1:EbEs0AVv82hx2wNQdGPgUI5lhzA/G0D9YwlJXL52JkM=
 google.golang.org/appengine v1.4.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
 google.golang.org/appengine v1.6.8 h1:IhEN5q69dyKagZPYMSdIjS2HqprW324FRQZJcGqPAsM=

@@ -7,7 +7,7 @@ require (
 	github.com/connect-sdk/interceptor v0.0.0-20230926085236-e8e362a3049e
 	github.com/connect-sdk/middleware v0.0.0-20230926095257-b1bdb8639191
 	github.com/go-chi/chi/v5 v5.0.10
-	google.golang.org/api v0.143.0
+	google.golang.org/api v0.145.0
 	google.golang.org/protobuf v1.31.0
 )
 
