@@ -3,7 +3,7 @@ module github.com/connect-sdk/health-api
 go 1.21.2
 
 require (
-	connectrpc.com/connect v1.11.1
+	connectrpc.com/connect v1.12.0
 	github.com/connect-sdk/interceptor v0.0.0-20231009131801-d33f81e0eb5b
 	github.com/connect-sdk/middleware v0.0.0-20231009131600-a8e12be82453
 	github.com/go-chi/chi/v5 v5.0.10
