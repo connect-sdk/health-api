@@ -37,8 +37,8 @@ import (
 const _ = connect.IsAtLeastVersion0_1_0
 
 const (
-	// HealthServiceName is the fully-qualified name of the HealthService service.
-	HealthServiceName = "grpc.health.v1.HealthService"
+	// HealthName is the fully-qualified name of the Health service.
+	HealthName = "grpc.health.v1.Health"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -49,14 +49,14 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// HealthServiceCheckProcedure is the fully-qualified name of the HealthService's Check RPC.
-	HealthServiceCheckProcedure = "/grpc.health.v1.HealthService/Check"
-	// HealthServiceWatchProcedure is the fully-qualified name of the HealthService's Watch RPC.
-	HealthServiceWatchProcedure = "/grpc.health.v1.HealthService/Watch"
+	// HealthCheckProcedure is the fully-qualified name of the Health's Check RPC.
+	HealthCheckProcedure = "/grpc.health.v1.Health/Check"
+	// HealthWatchProcedure is the fully-qualified name of the Health's Watch RPC.
+	HealthWatchProcedure = "/grpc.health.v1.Health/Watch"
 )
 
-// HealthServiceClient is a client for the grpc.health.v1.HealthService service.
-type HealthServiceClient interface {
+// HealthClient is a client for the grpc.health.v1.Health service.
+type HealthClient interface {
 	// Check gets the health of the specified service. If the requested service
 	// is unknown, the call will fail with status NOT_FOUND. If the caller does
 	// not specify a service name, the server should respond with its overall
@@ -85,47 +85,47 @@ type HealthServiceClient interface {
 	Watch(context.Context, *connect.Request[v1.HealthCheckRequest]) (*connect.ServerStreamForClient[v1.HealthCheckResponse], error)
 }
 
-// NewHealthServiceClient constructs a client for the grpc.health.v1.HealthService service. By
-// default, it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses,
-// and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the
-// connect.WithGRPC() or connect.WithGRPCWeb() options.
+// NewHealthClient constructs a client for the grpc.health.v1.Health service. By default, it uses
+// the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
+// uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
+// connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewHealthServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) HealthServiceClient {
+func NewHealthClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) HealthClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &healthServiceClient{
+	return &healthClient{
 		check: connect.NewClient[v1.HealthCheckRequest, v1.HealthCheckResponse](
 			httpClient,
-			baseURL+HealthServiceCheckProcedure,
+			baseURL+HealthCheckProcedure,
 			opts...,
 		),
 		watch: connect.NewClient[v1.HealthCheckRequest, v1.HealthCheckResponse](
 			httpClient,
-			baseURL+HealthServiceWatchProcedure,
+			baseURL+HealthWatchProcedure,
 			opts...,
 		),
 	}
 }
 
-// healthServiceClient implements HealthServiceClient.
-type healthServiceClient struct {
+// healthClient implements HealthClient.
+type healthClient struct {
 	check *connect.Client[v1.HealthCheckRequest, v1.HealthCheckResponse]
 	watch *connect.Client[v1.HealthCheckRequest, v1.HealthCheckResponse]
 }
 
-// Check calls grpc.health.v1.HealthService.Check.
-func (c *healthServiceClient) Check(ctx context.Context, req *connect.Request[v1.HealthCheckRequest]) (*connect.Response[v1.HealthCheckResponse], error) {
+// Check calls grpc.health.v1.Health.Check.
+func (c *healthClient) Check(ctx context.Context, req *connect.Request[v1.HealthCheckRequest]) (*connect.Response[v1.HealthCheckResponse], error) {
 	return c.check.CallUnary(ctx, req)
 }
 
-// Watch calls grpc.health.v1.HealthService.Watch.
-func (c *healthServiceClient) Watch(ctx context.Context, req *connect.Request[v1.HealthCheckRequest]) (*connect.ServerStreamForClient[v1.HealthCheckResponse], error) {
+// Watch calls grpc.health.v1.Health.Watch.
+func (c *healthClient) Watch(ctx context.Context, req *connect.Request[v1.HealthCheckRequest]) (*connect.ServerStreamForClient[v1.HealthCheckResponse], error) {
 	return c.watch.CallServerStream(ctx, req)
 }
 
-// HealthServiceHandler is an implementation of the grpc.health.v1.HealthService service.
-type HealthServiceHandler interface {
+// HealthHandler is an implementation of the grpc.health.v1.Health service.
+type HealthHandler interface {
 	// Check gets the health of the specified service. If the requested service
 	// is unknown, the call will fail with status NOT_FOUND. If the caller does
 	// not specify a service name, the server should respond with its overall
@@ -154,41 +154,41 @@ type HealthServiceHandler interface {
 	Watch(context.Context, *connect.Request[v1.HealthCheckRequest], *connect.ServerStream[v1.HealthCheckResponse]) error
 }
 
-// NewHealthServiceHandler builds an HTTP handler from the service implementation. It returns the
-// path on which to mount the handler and the handler itself.
+// NewHealthHandler builds an HTTP handler from the service implementation. It returns the path on
+// which to mount the handler and the handler itself.
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewHealthServiceHandler(svc HealthServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
-	healthServiceCheckHandler := connect.NewUnaryHandler(
-		HealthServiceCheckProcedure,
+func NewHealthHandler(svc HealthHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	healthCheckHandler := connect.NewUnaryHandler(
+		HealthCheckProcedure,
 		svc.Check,
 		opts...,
 	)
-	healthServiceWatchHandler := connect.NewServerStreamHandler(
-		HealthServiceWatchProcedure,
+	healthWatchHandler := connect.NewServerStreamHandler(
+		HealthWatchProcedure,
 		svc.Watch,
 		opts...,
 	)
-	return "/grpc.health.v1.HealthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/grpc.health.v1.Health/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case HealthServiceCheckProcedure:
-			healthServiceCheckHandler.ServeHTTP(w, r)
-		case HealthServiceWatchProcedure:
-			healthServiceWatchHandler.ServeHTTP(w, r)
+		case HealthCheckProcedure:
+			healthCheckHandler.ServeHTTP(w, r)
+		case HealthWatchProcedure:
+			healthWatchHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
 	})
 }
 
-// UnimplementedHealthServiceHandler returns CodeUnimplemented from all methods.
-type UnimplementedHealthServiceHandler struct{}
+// UnimplementedHealthHandler returns CodeUnimplemented from all methods.
+type UnimplementedHealthHandler struct{}
 
-func (UnimplementedHealthServiceHandler) Check(context.Context, *connect.Request[v1.HealthCheckRequest]) (*connect.Response[v1.HealthCheckResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("grpc.health.v1.HealthService.Check is not implemented"))
+func (UnimplementedHealthHandler) Check(context.Context, *connect.Request[v1.HealthCheckRequest]) (*connect.Response[v1.HealthCheckResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("grpc.health.v1.Health.Check is not implemented"))
 }
 
-func (UnimplementedHealthServiceHandler) Watch(context.Context, *connect.Request[v1.HealthCheckRequest], *connect.ServerStream[v1.HealthCheckResponse]) error {
-	return connect.NewError(connect.CodeUnimplemented, errors.New("grpc.health.v1.HealthService.Watch is not implemented"))
+func (UnimplementedHealthHandler) Watch(context.Context, *connect.Request[v1.HealthCheckRequest], *connect.ServerStream[v1.HealthCheckResponse]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("grpc.health.v1.Health.Watch is not implemented"))
 }

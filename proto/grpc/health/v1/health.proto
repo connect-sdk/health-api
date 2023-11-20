@@ -33,10 +33,10 @@ message HealthCheckResponse {
   ServingStatus status = 1;
 }
 
-// HealthService is gRPC's mechanism for checking whether a server is able to handle
+// Health is gRPC's mechanism for checking whether a server is able to handle
 // RPCs. Its semantics are documented in
 // https://github.com/grpc/grpc/blob/master/doc/health-checking.md.
-service HealthService {
+service Health {
   // Check gets the health of the specified service. If the requested service
   // is unknown, the call will fail with status NOT_FOUND. If the caller does
   // not specify a service name, the server should respond with its overall
