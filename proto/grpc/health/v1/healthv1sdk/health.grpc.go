@@ -23,6 +23,7 @@ type HealthServiceClient struct {
 // NewHealthServiceClient creates a new connect.runtime.v1.healthv1.HealthServiceClient client.
 func NewHealthServiceClient(uri string, options ...connect.ClientOption) healthv1.HealthServiceClient {
 	// prepare the options
+	options = append(options, interceptor.WithContext())
 	options = append(options, interceptor.WithTracer())
 	options = append(options, interceptor.WithLogger())
 	// prepare the client
@@ -55,6 +56,7 @@ type HealthServiceHandler struct {
 func (x *HealthServiceHandler) Mount(r chi.Router) {
 	var options []connect.HandlerOption
 	// prepare the options
+	options = append(options, interceptor.WithContext())
 	options = append(options, interceptor.WithValidator())
 	options = append(options, interceptor.WithRecovery())
 
